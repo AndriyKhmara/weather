@@ -12,13 +12,13 @@ gulp.task('lint', function (cb) {
     cb();
 });
 
-gulp.task('make-dirs', function () {
-    return fs.mkdir('./dist/logs', function (err) {
-        if (err) {
-            console.log('Adding directories failed' + err);
-        }
-    });
-});
+//gulp.task('make-dirs', function () {
+//    return fs.mkdir('./dist/logs', function (err) {
+//        if (err) {
+//            console.log('Adding directories failed' + err);
+//        }
+//    });
+//});
 
 gulp.task('copy-src', function () {
     return gulp.src('./src/**/**')
@@ -30,6 +30,6 @@ gulp.task('copy-src', function () {
 //        .pipe(gulp.dest('./dist/conf'));
 //});
 
-gulp.task('build', ['copy-src',  'lint', 'make-dirs']);
+gulp.task('build', ['copy-src',  'lint']);
 
 gulp.task('default', ['build']);

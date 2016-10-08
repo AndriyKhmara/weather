@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.75.0",
-    "mongodb": "^2.2.10",
     "gulp": "^3.9.0",
-    "gulp-jslint": "^1.0.5"
+    "gulp-jslint": "^1.0.5",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.3",
+    "request": "^2.75.0"
   }
 }
