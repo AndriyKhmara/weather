@@ -9,7 +9,7 @@ var urlDB = 'mongodb://localhost:27017/myproject';
 
 var logger = new Logger('./logs/log.txt', false);
 
-setInterval(function(){
+setInterval(function () {
 
     request(url, function (error, response, body) {
 
@@ -42,8 +42,4 @@ setInterval(function(){
         }
     });
 
-}, 3000);
-
-
-
-// Use connect method to connect to the Server
+}, 60000);

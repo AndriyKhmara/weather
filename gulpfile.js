@@ -25,11 +25,16 @@ gulp.task('copy-src', function () {
         .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('copy-public', function () {
+    return gulp.src('./src/public/**/**')
+        .pipe(gulp.dest('./dist/public'));
+});
+
 //gulp.task('copy-configs', function () {
 //    return gulp.src('./conf/**/**')
 //        .pipe(gulp.dest('./dist/conf'));
 //});
 
-gulp.task('build', ['copy-src',  'lint', 'make-dirs']);
+gulp.task('build', ['copy-src',  'lint', 'make-dirs', 'copy-public']);
 
 gulp.task('default', ['build']);

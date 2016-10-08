@@ -13,6 +13,8 @@
     "request": "^2.75.0",
     "mongodb": "^2.2.10",
     "gulp": "^3.9.0",
-    "gulp-jslint": "^1.0.5"
+    "gulp-jslint": "^1.0.5",
+    "express": "^4.0.0",
+    "body-parser": "^1.8.1"
   }
 }
