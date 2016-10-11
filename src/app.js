@@ -4,7 +4,7 @@ var request = require('request');
 var Logger = require('./services/logger.js');
 var MongoClient = require('mongodb').MongoClient;
 
-var url = 'http://api.openweathermap.org/data/2.5/weather?q=Rivne,ua&APPID=e9493cd95948c95df16a463acf42dac9';
+var url = 'http://api.openweathermap.org/data/2.5/weather?q=Rivne,ua&APPID='; // Add your own ID after registration on openweathermap.org
 var urlDB = 'mongodb://localhost:27017/myproject';
 
 var logger = new Logger('./logs/log.txt', false);
