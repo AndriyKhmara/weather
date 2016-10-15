@@ -19,16 +19,7 @@ app.get('/data', function (req, res) {
          * https://docs.mongodb.com/manual/reference/operator/query/
          * http://stackoverflow.com/questions/2008032/mongodb-query-with-an-or-condition
          */
-        console.log(collection.find({
-            $or: [
-                {
-                    humidity: {$lte: 50}
-                },
-                {
-                    pressure: {$eq: 1003.93}
-                }
-            ]
-        }).toArray(function (err, docs) {
+        console.log(collection.find().toArray(function (err, docs) {
             if (err) {
                 console.log(err);
                 docs = null;
