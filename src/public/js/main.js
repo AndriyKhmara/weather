@@ -1,8 +1,29 @@
-// var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-//
-// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-//     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-//     maxZoom: 18,
-//     id: 'mapbox.emerald',
-//     accessToken: 'pk.eyJ1IjoiYW5keWtobWFyYSIsImEiOiJjaXVscXF5NTkwMDBiMm9waWlhamZldHB2In0.4ooYXIW33pagGNU4r9Hggw'
-// }).addTo(mymap);
+
+var app = app || {};
+
+var cities = [
+    {
+        'name'  : 'Rivne',
+        'xCords': 50.630694,
+        'yCords': 26.239034
+    },
+    {
+        'name'  : 'Lviv ',
+        'xCords': 49.839398,
+        'yCords': 24.028062
+    },
+    {
+        'name'  : 'Kiev',
+        'xCords': 50.4308286,
+        'yCords': 30.4966362
+    }
+];
+
+
+
+// cities.forEach(function (city) {
+//     if (city.name == 'Rivne') {
+//         var marker = L.marker([city.xCords, city.yCords]).addTo(mymap);
+//         marker.bindPopup("<div id='view_render_block'></div>").openPopup();
+//     }
+// });

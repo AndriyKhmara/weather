@@ -27,13 +27,13 @@ var getWeather = function (url) {
 
                 var collection = db.collection('weather');
 
-
-
                 collection.insertOne({
-                    data: JSON.parse(body).main,
+                    main: JSON.parse(body).main,
+                    wind: JSON.parse(body).wind,
+                    clouds: JSON.parse(body).clouds,
+                    weather: JSON.parse(body).weather,
                     time: JSON.parse(body).dt,
-                    city: JSON.parse(body).name,
-                    weather: JSON.parse(body).weather
+                    city: JSON.parse(body).name
                 }, function (error, result) {
                     if (error) {
                         console.log(error);
@@ -59,6 +59,6 @@ setInterval(function () {
 
 
 
-}, 7200000);
+}, 5000);
 
 

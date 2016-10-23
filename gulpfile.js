@@ -7,6 +7,7 @@ var gulp            = require('gulp'),
     cleanCSS        = require('gulp-clean-css'),
     uglify          = require('gulp-uglify'),
     concat          = require('gulp-concat'),
+    compile        = require('gulp-ejs-template'),
     watch           = require('gulp-watch');
 
 var DIST_DIR = 'dist';
@@ -58,7 +59,7 @@ gulp.task('compile-less', function () {
         }))
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./dist/public/css/'));
+        .pipe(gulp.dest(DIST_DIR + '/public/css/'));
 });
 
 gulp.task('libs', function(){
@@ -66,10 +67,35 @@ gulp.task('libs', function(){
         './bower_components/jquery/dist/jquery.min.js',
         './bower_components/materialize/dist/css/materialize.min.css',
         './bower_components/materialize/dist/js/materialize.min.js',
+        './bower_components/leaflet/dist/**/*.*',
         './src/public/libs/**/*.*'
     ])
-        .pipe(gulp.dest('./dist/public/libs'));
+        .pipe(gulp.dest(DIST_DIR + '/public/libs'));
 });
+
+gulp.task('fonts', function(){
+    return gulp.src([
+        './bower_components/materialize/font/**/*.*'
+
+    ])
+        .pipe(gulp.dest(DIST_DIR + '/public/font/'));
+});
+
+gulp.task('img', function(){
+    return gulp.src('./src/public/img/**/*.*')
+        .pipe(gulp.dest(DIST_DIR + '/public/img/'));
+});
+
+gulp.task('templates', function() {
+    return gulp.src('./src/public/templates/*.ejs')
+        .pipe(compile({
+            moduleName: 'templates',
+            escape: false
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest(DIST_DIR + '/public/js'));
+});
+
 
 
 
@@ -80,7 +106,10 @@ gulp.task('build', [
     'build-back-end', 
     'compile-html', 
     'compile-js',
-    'compile-less'
+    'compile-less',
+    'fonts',
+    'templates',
+    'img'
 ]);
 
 gulp.task('default', ['build']);

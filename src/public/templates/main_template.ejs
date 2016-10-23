@@ -1,0 +1,19 @@
+<div class="content">
+
+    <%
+        _.each(it.collection, function (model) {
+            console.log(model.city);%>
+            <h1><%- model.city %></h1>
+            <h2>Weather in: <%- new Date(model.time) %></h2>
+            <ul>
+                <li>Temp: <%- (model.main.temp - 273.15).toFixed(2) %></li>
+                <li>Humidity: <%- model.main.humidity %></li>
+                <li>Pressure: <%- model.main.pressure %></li>
+                <li>Wind speed: <%- model.wind.speed %>, deg: <%- model.wind.deg %></li>
+                <li>Weather: <%- model.weather[0].description %></li>
+            </ul>
+
+    <% }); %>
+
+    <div class="waves-effect waves-light btn" id="get-weather">Update</div>
+</div>

@@ -24,6 +24,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-watch": "^4.3.8"
+    "gulp-watch": "^4.3.8",
+    "gulp-ejs-template": "^0.2.0"
   }
 }
