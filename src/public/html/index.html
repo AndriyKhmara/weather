@@ -9,8 +9,11 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
+        <div id="mapid"></div>
         <div id="chart">
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
@@ -19,6 +22,8 @@ and open the template in the editor.
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
             var app = {};
             var tempData = [];
@@ -40,43 +45,43 @@ and open the template in the editor.
                 weatherCollection: new app.weatherCollection(),
                 
                 initialize: function () {
-                    console.log('init');
                     this.listenTo(this.weatherCollection, 'update', this.render);
                     this.weatherCollection.fetch();
+                    console.log(this.weatherCollection);
                 },                
                 
                 render: function () {
                     var template = _.template('<% collection.forEach( function (item) { %> <%= item.get(\'humidity\') %>  <% });%>');
-                    var collectionData = [];
-                    var i = 1;
-                    this.weatherCollection.forEach(function (model) {
-                        collectionData.push( ( model.get('temp') - 273.15 ) ); // Get temperature in Celsius
-                        label.push(i);
-                        i++;
-                    });
-
-                    tempData = collectionData;
-                    var ctx = document.getElementById("myChart");
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: label,
-                            datasets: [{
-                                label: '# of Votes',
-                                data: collectionData
-
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
-                            }
-                        }
-                    });
+//                    var collectionData = [];
+//                    var i = 1;
+//                    this.weatherCollection.forEach(function (model) {
+//                        collectionData.push( ( model.get('temp') - 273.15 ) ); // Get temperature in Celsius
+//                        label.push(i);
+//                        i++;
+//                    });
+//
+//                    tempData = collectionData;
+//                    var ctx = document.getElementById("myChart");
+//                    var myChart = new Chart(ctx, {
+//                        type: 'bar',
+//                        data: {
+//                            labels: label,
+//                            datasets: [{
+//                                label: '# of Votes',
+//                                data: collectionData
+//
+//                            }]
+//                        },
+//                        options: {
+//                            scales: {
+//                                yAxes: [{
+//                                    ticks: {
+//                                        beginAtZero:true
+//                                    }
+//                                }]
+//                            }
+//                        }
+//                    });
 
                     
                 }
