@@ -7,8 +7,7 @@ var ENDLINE = "\r\n";
 
 module.exports = function (path, isDebugModeOn) {
 
-    var
-    getCurrentTime = function () {
+    var getCurrentTime = function () {
             var now = new Date();
             return [
                 now.getUTCFullYear(),
@@ -24,7 +23,7 @@ module.exports = function (path, isDebugModeOn) {
                 now.getUTCSeconds()
             ].join('');
         },
-                
+
         writeMessageToFile = function (message) {
             console.log(message);
             fs.writeFile(path, message, { encoding: 'utf8', flag: 'a+'}, function (err) {
@@ -35,7 +34,7 @@ module.exports = function (path, isDebugModeOn) {
                 }
             });
         },
-         
+
         logError = function (message) {
             writeMessageToFile('ERROR' + SEPARATOR + getCurrentTime() + SEPARATOR + message + ENDLINE);
         },
