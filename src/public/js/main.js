@@ -1,7 +1,21 @@
-
 $(document).ready(function () {
 
-    var cities = [
+    var initialize = function () {
+        getDataForChart('Rivne');
+    };
+
+    window.weather = (function () {
+        var changeTypeOfChart = function () {
+            var type = $('#typeOfChart').val();
+            renderChart(dataForChart, type);
+        };
+
+        return {
+            changeTypeOfChart:changeTypeOfChart
+        }
+    })();
+
+    var dataForChart = [], cities = [
         {
             'name'  : 'Rivne',
             'xCords': 50.630694,
@@ -72,6 +86,10 @@ $(document).ready(function () {
         renderMarker();
     }, 500);
 
+    $('#typeOfChart').on('change', function () {
+        var type = $('#typeOfChart').val();
+        console.log(type);
+    });
 
     var renderMarker = function () {
         for (var i = 0; i < markers.length; i++) {
@@ -89,4 +107,77 @@ $(document).ready(function () {
         }
     };
 
+    var getDataForChart = function (city) {
+        $.ajax('/getDataForChart', {
+            method: 'POST',
+            data: {
+                cityName: city
+            }
+        }).done(function (data) {
+            dataForChart = data;
+            renderChart(data, 'temp');
+        });
+    };
+
+
+
+    var preDataChart = function (data, type) {
+        console.log(type);
+        var date = [];
+        var result = [];
+        for (var i = 0; i < data.length; i++) {
+            var t = new Date(data[i].time);
+            date.push(t.getFullYear() + '-' + t.getMonth() + '-' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes());
+            switch (type) {
+                case 'temp':
+                    result.push(data[i].main.temp - 273.15);
+                    break;
+                case 'pressure':
+                    result.push(data[i].main.pressure);
+                    break;
+                case 'humidity':
+                    result.push(data[i].main.humidity);
+                    break;
+            }
+        }
+        return {
+            date : date,
+            data : result
+        }
+    };
+
+    var renderChart = function (data, type) {
+
+        var result = preDataChart(data, type);
+
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: result.date,
+                datasets: [{
+                    label: '# of Votes',
+                    data: result.data
+
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    };
+    /**********Materialize scripts*******/
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+
+
+    initialize();
 });
+
