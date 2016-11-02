@@ -10,8 +10,20 @@ $(document).ready(function () {
             renderChart(dataForChart, type);
         };
 
+        var updateWeather = function () {
+            $.ajax('/updateWeather', {
+                method: 'POST',
+                data: {
+                    
+                }
+            }).done(function (data) {
+                //TODO: make some message for successfully update weather data
+            });
+        };
+
         return {
-            changeTypeOfChart:changeTypeOfChart
+            changeTypeOfChart:changeTypeOfChart,
+            updateWeather:updateWeather
         }
     })();
 
@@ -47,9 +59,7 @@ $(document).ready(function () {
                 city : city,
                 template : template
             });
-            console.log('data from mongo***********************************************************************');
-            console.log(data);
-
+            
         });
     };
 
@@ -67,8 +77,7 @@ $(document).ready(function () {
     map.setView(ukraine, 6);
 
     var markers = [];
-    for (var i = 0; i < cities.length; i++) {
-        console.log(cities[i]);
+    for (var i = 0; i < cities.length; i++) {        
         mapMarkerBuilder(cities[i].name);
     }
 
@@ -87,8 +96,7 @@ $(document).ready(function () {
     }, 500);
 
     $('#typeOfChart').on('change', function () {
-        var type = $('#typeOfChart').val();
-        console.log(type);
+        var type = $('#typeOfChart').val();        
     });
 
     var renderMarker = function () {
@@ -121,8 +129,7 @@ $(document).ready(function () {
 
 
 
-    var preDataChart = function (data, type) {
-        console.log(type);
+    var preDataChart = function (data, type) {        
         var date = [];
         var result = [];
         for (var i = 0; i < data.length; i++) {

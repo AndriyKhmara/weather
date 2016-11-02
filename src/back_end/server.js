@@ -3,24 +3,29 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var MongoClient = require('mongodb').MongoClient;
+var weatherAPI = require('./models/weatherModel');
+var Logger = require('./services/logger.js');
 
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+
+weatherAPI.initialize();
+
+
 app.get('/citiesWeather', function (req, res) {
-
-
     MongoClient.connect('mongodb://localhost:27017/myproject', function (error, db) {
         if (error) {
-            console.log(error);
+            logger.logError(error);
         }
         var collection = db.collection('weather');
 
         console.log(collection.find().sort({ $natural: -1 }).limit(3).toArray(function (err, docs) {
             if (err) {
-                console.log(err);
+                logger.logError(error);
                 docs = null;
             }
             res.send(docs);
@@ -40,11 +45,9 @@ app.post('/cityWeather', function (req, res) {
             console.log(req.body.cityName);
             console.log(collection.find({'city':req.body.cityName}).sort({ $natural: -1 }).limit(1).toArray(function (err, docs) {
                 if (err) {
-                    console.log(err);
+                    console.log(error);
                     docs = null;
                 }
-                console.log('docs');
-                console.log(docs);
                 res.send(docs);
             }));
             db.close();
@@ -63,16 +66,18 @@ app.post('/getDataForChart', function (req, res) {
             console.log(req.body.cityName);
             console.log(collection.find({'city':req.body.cityName}).toArray(function (err, docs) {
                 if (err) {
-                    console.log(err);
+                    console.log(error);
                     docs = null;
                 }
-                console.log('docs');
-                console.log(docs);
                 res.send(docs);
             }));
             db.close();
         }
     });
+});
+
+app.post('/updateWeather', function (req, res) {
+    res.send(weatherAPI.updateWeather()) ;
 });
 
 
