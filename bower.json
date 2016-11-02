@@ -1,0 +1,24 @@
+{
+  "name": "Weather-WEB-service",
+  "description": "Gulp builder for weather app",
+  "main": "index.html",
+  "authors": [
+    ""
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Gulp"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "2.1.1",
+    "materialize": "~0.94.0",
+    "leaflet": "0.7.x"
+  }
+}

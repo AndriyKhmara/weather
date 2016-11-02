@@ -4,13 +4,21 @@ var request = require('request');
 var Logger = require('./services/logger.js');
 var MongoClient = require('mongodb').MongoClient;
 
-var url = 'http://api.openweathermap.org/data/2.5/weather?q=Rivne,ua&APPID='; // Add your own ID after registration on openweathermap.org
+var cities = ['Rivne,ua', 'Kiev, UA', 'Lviv, UA'];
+
+
 var urlDB = 'mongodb://localhost:27017/myproject';
 
 var logger = new Logger('./logs/log.txt', false);
 
 setInterval(function () {
+    cities.forEach(function (city) {
+        var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=e9493cd95948c95df16a463acf42dac9';
+        getWeather(url);
+    });
+}, 7200000);
 
+var getWeather = function (url) {
     request(url, function (error, response, body) {
 
         if (error) {
@@ -25,11 +33,17 @@ setInterval(function () {
 
 
                 var collection = db.collection('weather');
-                // Insert some documents
-                console.log(JSON.parse(body).main);
-                console.log(collection);
-                collection.insertOne(JSON.parse(body).main, function (error, result) {
+
+                collection.insertOne({
+                    main: JSON.parse(body).main,
+                    wind: JSON.parse(body).wind,
+                    clouds: JSON.parse(body).clouds,
+                    weather: JSON.parse(body).weather,
+                    time: JSON.parse(body).dt,
+                    city: JSON.parse(body).name
+                }, function (error, result) {
                     if (error) {
+                        console.log(error);
                         logger.logError(error);
                     }
                     console.log(result);
@@ -41,5 +55,9 @@ setInterval(function () {
             });
         }
     });
+};
 
-}, 60000);
+
+
+
+
