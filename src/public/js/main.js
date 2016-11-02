@@ -14,7 +14,7 @@ $(document).ready(function () {
             $.ajax('/updateWeather', {
                 method: 'POST',
                 data: {
-                    
+                    //TODO: parameters for update weather in future
                 }
             }).done(function (data) {
                 //TODO: make some message for successfully update weather data
@@ -22,31 +22,31 @@ $(document).ready(function () {
         };
 
         return {
-            changeTypeOfChart:changeTypeOfChart,
-            updateWeather:updateWeather
+            changeTypeOfChart: changeTypeOfChart,
+            updateWeather: updateWeather
         }
     })();
 
     var dataForChart = [], cities = [
         {
-            'name'  : 'Rivne',
+            'name': 'Rivne',
             'xCords': 50.630694,
             'yCords': 26.239034
         },
         {
-            'name'  : 'Lviv ',
+            'name': 'Lviv ',
             'xCords': 49.839398,
             'yCords': 24.028062
         },
         {
-            'name'  : 'Kiev',
+            'name': 'Kiev',
             'xCords': 50.4308286,
             'yCords': 30.4966362
         }
-    ];
-    var templateList = [];
+    ], templateList = [];
 
-    var mapMarkerBuilder = function (city){
+
+    var mapMarkerBuilder = function (city) {
         $.ajax('/cityWeather', {
             method: 'POST',
             data: {
@@ -54,12 +54,12 @@ $(document).ready(function () {
             }
         }).done(function (data) {
             var newCityModel = new app.CityWeatherModel(data);
-            var template = window.templates.render('model_template', {'model' : newCityModel.toJSON()});
+            var template = window.templates.render('model_template', {'model': newCityModel.toJSON()});
             templateList.push({
-                city : city,
-                template : template
+                city: city,
+                template: template
             });
-            
+
         });
     };
 
@@ -73,11 +73,11 @@ $(document).ready(function () {
     }).addTo(map);
 
 
-    var ukraine = new L.LatLng(48.8138644,28.1862516);
+    var ukraine = new L.LatLng(48.8138644, 28.1862516);
     map.setView(ukraine, 6);
 
     var markers = [];
-    for (var i = 0; i < cities.length; i++) {        
+    for (var i = 0; i < cities.length; i++) {
         mapMarkerBuilder(cities[i].name);
     }
 
@@ -86,7 +86,7 @@ $(document).ready(function () {
             templateList.forEach(function (temp) {
                 if (temp.city == cities[i].name) {
                     markers.push({
-                        arr : [cities[i].yCords, cities[i].xCords, temp.template]
+                        arr: [cities[i].yCords, cities[i].xCords, temp.template]
                     });
 
                 }
@@ -96,7 +96,7 @@ $(document).ready(function () {
     }, 500);
 
     $('#typeOfChart').on('change', function () {
-        var type = $('#typeOfChart').val();        
+        var type = $('#typeOfChart').val();
     });
 
     var renderMarker = function () {
@@ -128,8 +128,7 @@ $(document).ready(function () {
     };
 
 
-
-    var preDataChart = function (data, type) {        
+    var preDataChart = function (data, type) {
         var date = [];
         var result = [];
         for (var i = 0; i < data.length; i++) {
@@ -148,8 +147,8 @@ $(document).ready(function () {
             }
         }
         return {
-            date : date,
-            data : result
+            date: date,
+            data: result
         }
     };
 
@@ -172,7 +171,7 @@ $(document).ready(function () {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -180,7 +179,7 @@ $(document).ready(function () {
         });
     };
     /**********Materialize scripts*******/
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('select').material_select();
     });
 

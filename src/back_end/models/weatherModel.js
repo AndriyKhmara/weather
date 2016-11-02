@@ -35,7 +35,7 @@ var getWeather = function (url) {
                     time: JSON.parse(body).dt,
                     city: JSON.parse(body).name
                 }, function (error, result) {
-                    if (error) {                    
+                    if (error) {
                         logger.logError(error);
                     }
                 });
@@ -67,7 +67,7 @@ module.exports = (function () {
     };
 
     return {
-        updateWeather:updateWeather,
-        initialize:initialize
+        updateWeather: updateWeather,
+        initialize: initialize
     }
 })();

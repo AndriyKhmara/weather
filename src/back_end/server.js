@@ -4,11 +4,11 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var MongoClient = require('mongodb').MongoClient;
 var weatherAPI = require('./models/weatherModel');
-var Logger = require('./services/logger.js');
+var logger = require('./services/logger.js');
 
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
@@ -23,7 +23,7 @@ app.get('/citiesWeather', function (req, res) {
         }
         var collection = db.collection('weather');
 
-        console.log(collection.find().sort({ $natural: -1 }).limit(3).toArray(function (err, docs) {
+        console.log(collection.find().sort({$natural: -1}).limit(3).toArray(function (err, docs) {
             if (err) {
                 logger.logError(error);
                 docs = null;
@@ -43,7 +43,7 @@ app.post('/cityWeather', function (req, res) {
         if (req.body.cityName) {
             var collection = db.collection('weather');
             console.log(req.body.cityName);
-            console.log(collection.find({'city':req.body.cityName}).sort({ $natural: -1 }).limit(1).toArray(function (err, docs) {
+            console.log(collection.find({'city': req.body.cityName}).sort({$natural: -1}).limit(1).toArray(function (err, docs) {
                 if (err) {
                     console.log(error);
                     docs = null;
@@ -64,7 +64,7 @@ app.post('/getDataForChart', function (req, res) {
         if (req.body.cityName) {
             var collection = db.collection('weather');
             console.log(req.body.cityName);
-            console.log(collection.find({'city':req.body.cityName}).toArray(function (err, docs) {
+            console.log(collection.find({'city': req.body.cityName}).toArray(function (err, docs) {
                 if (err) {
                     console.log(error);
                     docs = null;
@@ -77,10 +77,8 @@ app.post('/getDataForChart', function (req, res) {
 });
 
 app.post('/updateWeather', function (req, res) {
-    res.send(weatherAPI.updateWeather()) ;
+    res.send(weatherAPI.updateWeather());
 });
-
-
 
 
 app.listen(3000, function () {
